@@ -24,21 +24,23 @@ public class ErrorDetails {
 	}
 	
 	
+	 
+	
+
 	public LocalTime getLocaltime() {
 		return localtime;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public String getDetails() {
+		return details;
+	}
 
 	public String getErrorMessage() {
 		return errorMessage;
-	}
-
-	
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	public String getMessage() {
-		return message;
 	}
 
 	@Override

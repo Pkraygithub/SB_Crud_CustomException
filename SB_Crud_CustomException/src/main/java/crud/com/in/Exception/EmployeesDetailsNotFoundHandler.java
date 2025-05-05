@@ -1,5 +1,7 @@
 package crud.com.in.Exception;
 
+import java.time.LocalTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,9 +15,10 @@ public class EmployeesDetailsNotFoundHandler {
 		
 		ErrorDetails error = new ErrorDetails();
 		
-		return new ResponseEntity<ErrorDetails>(
-				new ErrorDetails(ednf.getMessage(),
-						"Employees Details is Not Available", "Employees", error.getLocaltime().now()
+		error.getLocaltime();
+		return new ResponseEntity<>(
+				new ErrorDetails(
+						ednf.getMessage(),"Employees Details is Not Available", "Employees Details", LocalTime.now()
 						)
 				,HttpStatus.NOT_FOUND);
 		

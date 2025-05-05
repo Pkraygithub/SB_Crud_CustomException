@@ -16,42 +16,45 @@ public class EmployeesService implements EmployeesServiceImpl {
 	private EmployeesRepositery repo;
 
 	@Override
-	public Employees saveDetails(Employees emp) {
-		return repo.saveAndFlush(emp);
+	public String saveDetails(Employees emp) {
+		repo.saveAndFlush(emp);
+		return "Employees Details Inserted Successfully and Id is --> " + emp.getId();
 	}
-
+	
 	@Override
 	public List<Employees> getAllEmpDetails() {
 		return repo.findAll();
 	}
 
 	@Override
-	public Employees updateEmployees(int id, Employees updateEmp) {
-		
+	public Employees getEmpDetailsById(int id) {
+		return repo.findById(id).orElseThrow(() -> new EmployeesDetailsNotFound("Employes Details not Found " + id));
+	}
+
+	@Override
+	public String updateEmployees(int id, Employees updateEmp) {
+
 		Employees updateEmps = repo.findById(id)
-				.orElseThrow(()->new EmployeesDetailsNotFound("Employes Details not Found "+id));
-		
+				.orElseThrow(() -> new EmployeesDetailsNotFound("Employes Details not Found " + id));
+
 		updateEmps.setName(updateEmp.getName());
 		updateEmps.setCity(updateEmp.getCity());
 		updateEmps.setPhoNo(updateEmp.getPhoNo());
 		updateEmps.setSalary(updateEmp.getSalary());
 		updateEmps.setPincode(updateEmp.getPincode());
-		
-		return repo.save(updateEmps);
+
+		repo.save(updateEmps);
+
+		return "Employees Details Updated Successfully whose Id is --> " + updateEmps.getId();
+
 	}
 
 	@Override
 	public String deletedById(int id) {
 
 		Employees deleteId = repo.findById(id)
-				.orElseThrow(()-> new EmployeesDetailsNotFound("Employes Details not Found "+id));		
+				.orElseThrow(() -> new EmployeesDetailsNotFound("Employes Details not Found " + id));
 		repo.delete(deleteId);
-		return "Employees Id"+id+ "is Deleted Successfully";
+		return "Employees Id : " + id + " is Deleted Successfully";
 	}
-
-	@Override
-	public Employees getEmpDetailsById(int id) {
-		return repo.findById(id).orElseThrow(()-> new EmployeesDetailsNotFound("Employes Details not Found "+id));
-	}
-
 }

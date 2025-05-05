@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import crud.com.in.Entity.Employees;
@@ -26,10 +25,10 @@ public class EmployeesRestController {
 	private EmployeesServiceImpl service;
 
 	@PostMapping("/register")
-	public ResponseEntity<?> saveEmpDetails(@RequestBody Employees e) {
+	public ResponseEntity<String> saveEmpDetails(@RequestBody Employees e) {
 
-		Employees saveDetails = service.saveDetails(e);
-		return new ResponseEntity<Employees>(saveDetails, HttpStatus.OK);
+		 String saveDetails = service.saveDetails(e);
+		return new ResponseEntity<>(saveDetails, HttpStatus.OK);
 	}
 
 	@GetMapping("/showAllDetails")
@@ -48,7 +47,7 @@ public class EmployeesRestController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Employees> showDetailsById(@PathVariable(value = "id") int id) {
+	public ResponseEntity<Employees> showDetailsById(@PathVariable (value = "id") int id) {
 
 		Employees empDetailsById = service.getEmpDetailsById(id);
 
@@ -60,8 +59,12 @@ public class EmployeesRestController {
 	}
 
 	@PutMapping("/edit/{id}")
-	public ResponseEntity<?> updateEmployeesDetails(@PathVariable int id, @RequestBody Employees updateEmp) {
-		return ResponseEntity.ok(service.updateEmployees(id, updateEmp));
+	public ResponseEntity<String> updateEmployeesDetails(@PathVariable int id, @RequestBody Employees updateEmp) {
+		
+		String updateEmployees = service.updateEmployees(id, updateEmp);
+		//return ResponseEntity.ok(service.updateEmployees(id, updateEmp));
+		
+		return new ResponseEntity<>(updateEmployees,HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
